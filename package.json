@@ -1,0 +1,70 @@
+{
+  "name": "plainscreen",
+  "version": "1.0.0",
+  "description": "mmo",
+  "main": "lib/index.js",
+  "scripts": {
+    "watch": "watchify lib/index.js -o public/js/app.js -v",
+    "build": "browserify lib/index.js -o public/js/app.js -v",
+    "start": "http-server public -p 3000",
+    "test": "mocha --opts ./test/mocha.opts test/tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josephquested/plainscreen.git"
+  },
+  "keywords": [
+    "chai",
+    "cheerio",
+    "enzyme",
+    "jsdom",
+    "mocha",
+    "react",
+    "react-router",
+    "redux",
+    "redux-router"
+  ],
+  "author": "Joseph Quested <josephquested@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/josephquested/plainscreen/issues"
+  },
+  "homepage": "https://github.com/josephquested/plainscreen#readme",
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0",
+      "react"
+    ]
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "dependencies": {
+    "babel-preset-es2015": "^6.5.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0",
+    "http-server": "^0.8.5",
+    "ramda": "^0.19.1",
+    "react": "^0.14.7",
+    "react-addons-pure-render-mixin": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-redux": "^4.4.0",
+    "react-router": "^2.0.0",
+    "redux": "^3.3.1",
+    "watchify": "^3.7.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-enzyme": "^0.4.0",
+    "cheerio": "^0.20.0",
+    "enzyme": "^2.0.0",
+    "jsdom": "^8.0.2",
+    "mocha": "^2.4.5",
+    "react-addons-test-utils": "^0.14.7"
+  }
+}
