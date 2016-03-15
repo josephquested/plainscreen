@@ -4,6 +4,13 @@ body {
   color: white;
 }
 
+table {
+  margin-left: center;
+  margin-right: center;
+  margin: 0 auto;
+  background-color: white;
+}
+
 td {
   width: 20px;
   height: 20px;

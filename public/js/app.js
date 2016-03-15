@@ -104,7 +104,7 @@ exports.default = _react2.default.createClass({
     var cells = new Array(Number(this.props.width)).fill();
     cells = cells.map(function (cell, index) {
       var cellId = _this.props.id + '_' + index;
-      return _react2.default.createElement(_Cell2.default, { 'class': 'limbo', key: cellId, id: cellId });
+      return _react2.default.createElement(_Cell2.default, { 'class': 'empty', key: cellId, id: cellId });
     });
 
     return _react2.default.createElement(
@@ -143,7 +143,7 @@ exports.default = _react2.default.createClass({
   generateTable: function generateTable() {
     var _this = this;
 
-    var rows = new Array(Number(this.props.height)).fill('');
+    var rows = new Array(Number(this.props.height)).fill();
     rows = rows.map(function (row, index) {
       return _react2.default.createElement(_Row2.default, { id: index, width: _this.props.width, key: index });
     });
