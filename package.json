@@ -1,29 +1,27 @@
 {
   "name": "plainscreen",
   "version": "1.0.0",
-  "description": "mmo",
+  "description": "videogame",
   "main": "lib/index.js",
   "scripts": {
     "watch": "watchify lib/index.js -o public/js/app.js -v",
     "build": "browserify lib/index.js -o public/js/app.js -v",
     "start": "http-server public -p 3000",
-    "test": "mocha --opts ./test/mocha.opts test/tests.js"
+    "test": "ava --watch | tap-spec"
+  },
+  "ava": {
+    "failFast": true,
+    "tap": true,
+    "require": [
+      "babel-register",
+      "./test/helpers/setup-browser-env.js"
+    ],
+    "babel": "inherit"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/josephquested/plainscreen.git"
   },
-  "keywords": [
-    "chai",
-    "cheerio",
-    "enzyme",
-    "jsdom",
-    "mocha",
-    "react",
-    "react-router",
-    "redux",
-    "redux-router"
-  ],
   "author": "Joseph Quested <josephquested@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -49,7 +47,6 @@
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
     "http-server": "^0.8.5",
-    "ramda": "^0.19.1",
     "react": "^0.14.7",
     "react-addons-pure-render-mixin": "^0.14.7",
     "react-dom": "^0.14.7",
@@ -59,12 +56,11 @@
     "watchify": "^3.7.0"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "chai-enzyme": "^0.4.0",
-    "cheerio": "^0.20.0",
+    "ava": "^0.13.0",
+    "sinon": "^1.17.3",
     "enzyme": "^2.0.0",
     "jsdom": "^8.0.2",
-    "mocha": "^2.4.5",
+    "tap-spec": "^4.1.1",
     "react-addons-test-utils": "^0.14.7"
   }
 }
