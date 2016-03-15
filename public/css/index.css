@@ -4,12 +4,12 @@ body {
   color: white;
 }
 
-.main-header {
-  text-align: center;
+td {
+  width: 20px;
+  height: 20px;
+  background-color: white;
 }
 
-td {
-  width: 10px;
-  height: 10px;
-  background-color: red;
+.main-header {
+  text-align: center;
 }

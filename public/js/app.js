@@ -26,7 +26,7 @@ exports.default = _react2.default.createClass({
       'div',
       { className: 'app' },
       _react2.default.createElement(_Header2.default, { header: 'plainscreen' }),
-      _react2.default.createElement(_Table2.default, { id: 'table', height: '20', width: '30' })
+      _react2.default.createElement(_Table2.default, { id: 'table', height: '20', width: '40' })
     );
   }
 });
@@ -99,10 +99,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _react2.default.createClass({
   displayName: 'Row',
   render: function render() {
+    var _this = this;
 
-    var cells = new Array(Number(this.props.width)).fill('');
+    var cells = new Array(Number(this.props.width)).fill();
     cells = cells.map(function (cell, index) {
-      return _react2.default.createElement(_Cell2.default, { 'class': 'limbo', key: index, id: index });
+      var cellId = _this.props.id + '_' + index;
+      return _react2.default.createElement(_Cell2.default, { 'class': 'limbo', key: cellId, id: cellId });
     });
 
     return _react2.default.createElement(
@@ -140,18 +142,6 @@ exports.default = _react2.default.createClass({
 
   generateTable: function generateTable() {
     var _this = this;
-
-    // const rows = []
-    // for (let i = 0; i < this.props.height; i++) {
-    //   const cells = []
-    //   for (let j = 0; j < this.props.width; j++) {
-    //     cells.push(<Cell class='limbo' id={j} key={j}/>)
-    //   }
-    //   // console.log(cells)
-    //   rows.push(<Row id={i} key={i}>{cells}</Row>)
-    // }
-
-    // console.log(rows[0].props.children)
 
     var rows = new Array(Number(this.props.height)).fill('');
     rows = rows.map(function (row, index) {

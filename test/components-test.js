@@ -17,23 +17,6 @@ test('<Header/> renders page title text', t => {
   t.same(wrapper.find('h1').text(), expected)
 })
 
-
-// row //
-test('<Row/> generates a row with an id', t => {
-  const props = { id: 'testId'}
-  const wrapper = shallow(React.createElement(Row, props))
-  t.ok(wrapper.find('#testId').length > 0)
-})
-
-// cell //
-test('<Cell/> generates a td; gives it a class/id', t => {
-  const props = { class: 'testClass', id: 'testId'}
-  const wrapper = shallow(React.createElement(Cell, props))
-  t.ok(wrapper.find('td').hasClass('testClass'))
-  console.log(wrapper.find('td').length)
-  t.ok(wrapper.find('#testId').length > 0)
-})
-
 // table //
 test('<Table/> generates a table based on height/width props', t => {
   const props = { id: 'testId', height: 20, width: 30}
@@ -41,4 +24,19 @@ test('<Table/> generates a table based on height/width props', t => {
   t.ok(wrapper.find('#testId').length > 0)
   t.same(wrapper.find('tr').length, props.height)
   t.same(wrapper.find('td').length, props.height * props.width)
+})
+
+// row //
+test('<Row/> generates a row with an id', t => {
+  const props = { id: 'testRowId', width: 10}
+  const wrapper = shallow(React.createElement(Row, props))
+  t.ok(wrapper.find('#testRowId'))
+})
+
+// cell //
+test('<Cell/> generates a td; gives it a class/id', t => {
+  const props = { class: 'testCellClass', id: 'testCellId'}
+  const wrapper = shallow(React.createElement(Cell, props))
+  t.ok(wrapper.find('td').hasClass('testCellClass'))
+  t.ok(wrapper.find('#testCellId').length > 0)
 })
