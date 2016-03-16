@@ -1,10 +1,13 @@
 import test from 'ava'
 import React from 'react'
+import ReactTestUtils from 'react-addons-test-utils'
 import { spy } from 'sinon'
 import { shallow, render, mount } from 'enzyme'
+import { convertKeyCode } from '../lib/utils'
 
 // components //
-import Header from '../lib/components/Header'
+import App from '../lib/components/App'
+import Header from '../lib/components/ui/Header'
 import Table from '../lib/components/board/Table.js'
 import Row from '../lib/components/board/Row.js'
 import Cell from '../lib/components/board/Cell.js'
