@@ -7,7 +7,7 @@ import { convertKeyCode } from '../lib/utils'
 
 // components //
 import App from '../lib/components/App'
-import Header from '../lib/components/ui/Header'
+import Header from '../lib/components/Header'
 import Table from '../lib/components/board/Table.js'
 import Row from '../lib/components/board/Row.js'
 import Cell from '../lib/components/board/Cell.js'
@@ -37,9 +37,8 @@ test('<Row/> generates a row with an id', t => {
 })
 
 // cell //
-test('<Cell/> generates a td; gives it a class/id', t => {
-  const props = { class: 'testCellClass', id: 'testCellId'}
+test('<Cell/> generates a td and gives it a class', t => {
+  const props = { class: 'testCellClass'}
   const wrapper = shallow(React.createElement(Cell, props))
   t.ok(wrapper.find('td').hasClass('testCellClass'))
-  t.ok(wrapper.find('#testCellId').length > 0)
 })

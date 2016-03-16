@@ -9,7 +9,7 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Header = require('./ui/Header.js');
+var _Header = require('./Header.js');
 
 var _Header2 = _interopRequireDefault(_Header);
 
@@ -31,10 +31,12 @@ exports.default = _react2.default.createClass({
 
   handleKeyDown: function handleKeyDown(event) {
     console.log((0, _utils.convertKeyCode)(event.keyCode));
+    if ((0, _utils.convertKeyCode)(event.keyCode) === 'up') this.getStateArray();
   },
 
-  log: function log(text) {
-    console.log('gamelog: ' + text);
+  getStateArray: function getStateArray() {
+    var stateArray = (0, _utils.generateStateArray)();
+    console.log(stateArray);
   },
 
   render: function render() {
@@ -47,7 +49,35 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"../utils":7,"./board/Table.js":4,"./ui/Header.js":5,"react":165}],2:[function(require,module,exports){
+},{"../utils":7,"./Header.js":2,"./board/Table.js":5,"react":165}],2:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _react2.default.createClass({
+  displayName: 'Header',
+  render: function render() {
+    return _react2.default.createElement(
+      'div',
+      { className: 'main-header' },
+      _react2.default.createElement(
+        'h1',
+        null,
+        this.props.header
+      )
+    );
+  }
+});
+
+},{"react":165}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -66,21 +96,25 @@ exports.default = _react2.default.createClass({
 
   getInitialState: function getInitialState() {
     return {
-      class: this.props.class,
-      id: this.props.id
+      class: this.props.class
     };
   },
 
-  updateClass: function updateClass(newClass) {
+  setNewClass: function setNewClass(newClass) {
     this.setState({ class: newClass });
   },
 
   render: function render() {
-    return _react2.default.createElement('td', { className: this.state.class, id: this.state.id });
+    var _this = this;
+
+    return _react2.default.createElement('td', {
+      onClick: function onClick() {
+        return _this.setNewClass('full');
+      }, className: this.state.class });
   }
 });
 
-},{"react":165}],3:[function(require,module,exports){
+},{"react":165}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -105,7 +139,7 @@ exports.default = _react2.default.createClass({
     var cells = new Array(Number(this.props.width)).fill();
     cells = cells.map(function (cell, index) {
       var cellId = _this.props.id + '_' + index;
-      return _react2.default.createElement(_Cell2.default, { 'class': 'empty', key: cellId, id: cellId });
+      return _react2.default.createElement(_Cell2.default, { 'class': 'empty', key: cellId });
     });
 
     return _react2.default.createElement(
@@ -116,7 +150,7 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"./Cell":2,"react":165}],4:[function(require,module,exports){
+},{"./Cell":3,"react":165}],5:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -165,35 +199,7 @@ exports.default = _react2.default.createClass({
   }
 });
 
-},{"./Cell":2,"./Row":3,"react":165}],5:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _react2.default.createClass({
-  displayName: 'Header',
-  render: function render() {
-    return _react2.default.createElement(
-      'div',
-      { className: 'main-header' },
-      _react2.default.createElement(
-        'h1',
-        null,
-        this.props.header
-      )
-    );
-  }
-});
-
-},{"react":165}],6:[function(require,module,exports){
+},{"./Cell":3,"./Row":4,"react":165}],6:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -224,6 +230,20 @@ var keys = new Map([[38, 'up'], [87, 'up'], [40, 'down'], [83, 'down'], [37, 'le
 
 var convertKeyCode = exports.convertKeyCode = function convertKeyCode(keyCode) {
   return keys.get(keyCode);
+};
+
+var generateStateArray = exports.generateStateArray = function generateStateArray() {
+  var rawArray = [];
+  var stateArray = [];
+
+  Array.from(document.getElementsByTagName('td')).forEach(function (tag) {
+    rawArray.push(tag.className);
+  });
+
+  while (rawArray.length) {
+    stateArray.push(rawArray.splice(0, 40));
+  }
+  return stateArray;
 };
 
 },{}],8:[function(require,module,exports){
