@@ -17,11 +17,11 @@ var _Table = require('./board/Table.js');
 
 var _Table2 = _interopRequireDefault(_Table);
 
-var _utils = require('../utils');
-
 var _clone = require('clone');
 
 var _clone2 = _interopRequireDefault(_clone);
+
+var _utils = require('../utils');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31,20 +31,22 @@ exports.default = _react2.default.createClass({
 
   componentDidMount: function componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
+    this.scrollState();
   },
 
   handleKeyDown: function handleKeyDown(event) {
     console.log((0, _utils.convertKeyCode)(event.keyCode));
-    if ((0, _utils.convertKeyCode)(event.keyCode) === 'up') this.scrollState();
   },
 
   scrollState: function scrollState() {
-    var state = (0, _clone2.default)((0, _utils.generateStateArray)());
-    state.forEach(function (row) {
-      row.shift();
-      row.push('full');
-    });
-    this.props.store.dispatch({ type: 'SCROLL', state: state });
+    var _this = this;
+
+    var scrollSpeed = 500;
+    var scrollInterval = window.setInterval(function () {
+      var state = (0, _clone2.default)((0, _utils.generateStateArray)());
+      state = (0, _utils.returnFloorPattern)(state);
+      _this.props.store.dispatch({ type: 'SCROLL', state: state });
+    }, scrollSpeed);
   },
 
   render: function render() {
@@ -235,7 +237,7 @@ Object.defineProperty(exports, "__esModule", {
 var _utils = require('./utils');
 
 exports.default = function () {
-  var state = arguments.length <= 0 || arguments[0] === undefined ? (0, _utils.generateInitState)() : arguments[0];
+  var state = arguments.length <= 0 || arguments[0] === undefined ? (0, _utils.returnEmptyPattern)() : arguments[0];
   var action = arguments[1];
 
   switch (action.type) {
@@ -254,7 +256,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 var keys = new Map([[38, 'up'], [87, 'up'], [40, 'down'], [83, 'down'], [37, 'left'], [65, 'left'], [39, 'right'], [68, 'right']]);
 
-var generateInitState = exports.generateInitState = function generateInitState() {
+// pattern generators //
+
+var returnEmptyPattern = exports.returnEmptyPattern = function returnEmptyPattern() {
   var state = [];
   for (var i = 0; i < 20; i++) {
     var cells = new Array(40).fill('empty');
@@ -262,6 +266,21 @@ var generateInitState = exports.generateInitState = function generateInitState()
   }
   return state;
 };
+
+var returnFloorPattern = exports.returnFloorPattern = function returnFloorPattern(state) {
+  var rows = [state[17], state[18], state[19]];
+  rows.forEach(function (row) {
+    row.fill('full');
+  });
+  // console.log(state)
+  return state;
+};
+
+var returnRandomPattern = exports.returnRandomPattern = function returnRandomPattern() {
+  return Math.random() > 0.5 ? 'full' : 'empty';
+};
+
+//    ***    //
 
 var convertKeyCode = exports.convertKeyCode = function convertKeyCode(keyCode) {
   return keys.get(keyCode);

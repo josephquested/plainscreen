@@ -3,7 +3,7 @@ import React from 'react'
 import ReactTestUtils from 'react-addons-test-utils'
 import { spy } from 'sinon'
 import { shallow, render, mount } from 'enzyme'
-import { convertKeyCode } from '../lib/utils'
+import { convertKeyCode, generateStateArray } from '../lib/utils'
 
 // components //
 import App from '../lib/components/App'
@@ -22,7 +22,8 @@ test('<Header/> renders page title text', t => {
 
 // table //
 test('<Table/> generates a table based on height/width props', t => {
-  const props = { id: 'testId', height: 20, width: 30}
+  const gameState = generateStateArray()
+  const props = { id: 'testId', gameState: gameState, height: 20, width: 30}
   const wrapper = render(React.createElement(Table, props))
   t.ok(wrapper.find('#testId').length > 0)
   t.same(wrapper.find('tr').length, props.height)
