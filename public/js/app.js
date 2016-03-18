@@ -267,6 +267,14 @@ var returnEmptyPattern = exports.returnEmptyPattern = function returnEmptyPatter
   return state;
 };
 
+var spawnPlayer = exports.spawnPlayer = function spawnPlayer(state) {
+  state[16][30] = 'player';
+  state[15][30] = 'player';
+  state[16][31] = 'player';
+  state[15][31] = 'player';
+  return state;
+};
+
 var returnFloorPattern = exports.returnFloorPattern = function returnFloorPattern(state) {
   var rows = [state[17], state[18], state[19]];
   rows.forEach(function (row) {

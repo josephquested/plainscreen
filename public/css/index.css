@@ -24,6 +24,10 @@ td.full {
   background-color: black;
 }
 
+td.player {
+  background-color: red;
+}
+
 .main-header {
   text-align: center;
 }
