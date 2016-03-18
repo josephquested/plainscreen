@@ -5,11 +5,10 @@ import App from './components/App.js'
 import reducer from './reducer'
 
 const store = createStore(reducer)
-const app = document.createElement('div')
-document.body.appendChild(app)
 
 const render = () => {
-  ReactDOM.render(<App gameState={store.getState()} store={store}/>, app)
+  ReactDOM.render(<App gameState={store.getState()} store={store}/>,
+  document.getElementById('app'))
 }
 
 store.subscribe(render)

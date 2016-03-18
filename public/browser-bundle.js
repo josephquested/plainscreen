@@ -67,11 +67,9 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var store = (0, _redux.createStore)(_reducer2.default);
-	var app = document.createElement('div');
-	document.body.appendChild(app);
 	
 	var render = function render() {
-	  _reactDom2.default.render(_react2.default.createElement(_App2.default, { gameState: store.getState(), store: store }), app);
+	  _reactDom2.default.render(_react2.default.createElement(_App2.default, { gameState: store.getState(), store: store }), document.getElementById('app'));
 	};
 	
 	store.subscribe(render);
@@ -20497,7 +20495,13 @@
 	
 	var _clone2 = _interopRequireDefault(_clone);
 	
-	var _utils = __webpack_require__(180);
+	var _inputTools = __webpack_require__(182);
+	
+	var _stateTools = __webpack_require__(183);
+	
+	var _floorTemplate = __webpack_require__(184);
+	
+	var _floorTemplate2 = _interopRequireDefault(_floorTemplate);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -20511,7 +20515,7 @@
 	  },
 	
 	  handleKeyDown: function handleKeyDown(event) {
-	    console.log((0, _utils.convertKeyCode)(event.keyCode));
+	    console.log((0, _inputTools.convertKeyCode)(event.keyCode));
 	  },
 	
 	  scrollState: function scrollState() {
@@ -20519,8 +20523,8 @@
 	
 	    var scrollSpeed = 500;
 	    var scrollInterval = window.setInterval(function () {
-	      var state = (0, _clone2.default)((0, _utils.generateStateArray)());
-	      state = (0, _utils.returnFloorPattern)(state);
+	      var state = (0, _clone2.default)((0, _stateTools.generateStateArray)());
+	      state = (0, _floorTemplate2.default)(state);
 	      _this.props.store.dispatch({ type: 'SCROLL', state: state });
 	    }, scrollSpeed);
 	  },
@@ -22609,69 +22613,7 @@
 	};
 
 /***/ },
-/* 180 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var keys = new Map([[38, 'up'], [87, 'up'], [40, 'down'], [83, 'down'], [37, 'left'], [65, 'left'], [39, 'right'], [68, 'right']]);
-	
-	// pattern generators //
-	
-	var returnEmptyPattern = exports.returnEmptyPattern = function returnEmptyPattern() {
-	  var state = [];
-	  for (var i = 0; i < 20; i++) {
-	    var cells = new Array(40).fill('empty');
-	    state.push(cells);
-	  }
-	  return state;
-	};
-	
-	var spawnPlayer = exports.spawnPlayer = function spawnPlayer(state) {
-	  state[16][30] = 'player';
-	  state[15][30] = 'player';
-	  state[16][31] = 'player';
-	  state[15][31] = 'player';
-	  return state;
-	};
-	
-	var returnFloorPattern = exports.returnFloorPattern = function returnFloorPattern(state) {
-	  var rows = [state[17], state[18], state[19]];
-	  rows.forEach(function (row) {
-	    row.fill('full');
-	  });
-	  // console.log(state)
-	  return state;
-	};
-	
-	var returnRandomPattern = exports.returnRandomPattern = function returnRandomPattern() {
-	  return Math.random() > 0.5 ? 'full' : 'empty';
-	};
-	
-	//    ***    //
-	
-	var convertKeyCode = exports.convertKeyCode = function convertKeyCode(keyCode) {
-	  return keys.get(keyCode);
-	};
-	
-	var generateStateArray = exports.generateStateArray = function generateStateArray() {
-	  var rawArray = [];
-	  var stateArray = [];
-	
-	  Array.from(document.getElementsByTagName('td')).forEach(function (tag) {
-	    rawArray.push(tag.className);
-	  });
-	
-	  while (rawArray.length) {
-	    stateArray.push(rawArray.splice(0, 40));
-	  }
-	  return stateArray;
-	};
-
-/***/ },
+/* 180 */,
 /* 181 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -22681,10 +22623,18 @@
 	  value: true
 	});
 	
-	var _utils = __webpack_require__(180);
+	var _emptyTemplate = __webpack_require__(185);
+	
+	var _emptyTemplate2 = _interopRequireDefault(_emptyTemplate);
+	
+	var _floorTemplate = __webpack_require__(184);
+	
+	var _floorTemplate2 = _interopRequireDefault(_floorTemplate);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = function () {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? (0, _utils.returnEmptyPattern)() : arguments[0];
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? (0, _floorTemplate2.default)((0, _emptyTemplate2.default)()) : arguments[0];
 	  var action = arguments[1];
 	
 	  switch (action.type) {
@@ -22693,6 +22643,86 @@
 	    default:
 	      return state;
 	  }
+	};
+
+/***/ },
+/* 182 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var keys = new Map([[38, 'up'], [87, 'up'], [40, 'down'], [83, 'down'], [37, 'left'], [65, 'left'], [39, 'right'], [68, 'right']]);
+	
+	var convertKeyCode = exports.convertKeyCode = function convertKeyCode(keyCode) {
+	  return keys.get(keyCode);
+	};
+
+/***/ },
+/* 183 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var generateStateArray = exports.generateStateArray = function generateStateArray() {
+	  var rawArray = [];
+	  var stateArray = [];
+	  Array.from(document.getElementsByTagName('td')).forEach(function (tag) {
+	    rawArray.push(tag.className);
+	  });
+	  while (rawArray.length) {
+	    stateArray.push(rawArray.splice(0, 40));
+	  }
+	
+	  return stateArray;
+	};
+	
+	var returnRandomState = exports.returnRandomState = function returnRandomState() {
+	  return Math.random() > 0.5 ? 'full' : 'empty';
+	};
+
+/***/ },
+/* 184 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	exports.default = function (state) {
+	  var rows = [state[17], state[18], state[19]];
+	  rows.forEach(function (row) {
+	    row.fill('full');
+	  });
+	
+	  return state;
+	};
+
+/***/ },
+/* 185 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	exports.default = function () {
+	  var state = [];
+	  for (var i = 0; i < 20; i++) {
+	    var cells = new Array(40).fill('empty');
+	    state.push(cells);
+	  }
+	
+	  return state;
 	};
 
 /***/ }
