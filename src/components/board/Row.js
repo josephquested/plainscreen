@@ -7,7 +7,7 @@ export default React.createClass({
     cells = cells.map((cell, index) => {
       const cellId = `${this.props.id}_${index}`
       const cellClass = this.props.gameState[this.props.id][index]
-      return <Cell class={cellClass} text={cellId} key={cellId}/>
+      return <Cell class={cellClass} key={cellId}/>
     })
 
     return (

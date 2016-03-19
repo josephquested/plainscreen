@@ -60,7 +60,7 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _reducer = __webpack_require__(181);
+	var _reducer = __webpack_require__(183);
 	
 	var _reducer2 = _interopRequireDefault(_reducer);
 	
@@ -20495,11 +20495,11 @@
 	
 	var _clone2 = _interopRequireDefault(_clone);
 	
-	var _inputTools = __webpack_require__(182);
+	var _inputTools = __webpack_require__(180);
 	
-	var _stateTools = __webpack_require__(183);
+	var _stateTools = __webpack_require__(181);
 	
-	var _floorTemplate = __webpack_require__(184);
+	var _floorTemplate = __webpack_require__(182);
 	
 	var _floorTemplate2 = _interopRequireDefault(_floorTemplate);
 	
@@ -20603,7 +20603,9 @@
 	
 	    var rows = new Array(Number(this.props.height)).fill();
 	    rows = rows.map(function (row, index) {
-	      return _react2.default.createElement(_Row2.default, { gameState: _this.props.gameState, id: index, width: _this.props.width, key: index });
+	      return _react2.default.createElement(_Row2.default, { gameState: _this.props.gameState,
+	        id: index, width: _this.props.width,
+	        key: index });
 	    });
 	
 	    return _react2.default.createElement(
@@ -20651,7 +20653,7 @@
 	    cells = cells.map(function (cell, index) {
 	      var cellId = _this.props.id + '_' + index;
 	      var cellClass = _this.props.gameState[_this.props.id][index];
-	      return _react2.default.createElement(_Cell2.default, { 'class': cellClass, text: cellId, key: cellId });
+	      return _react2.default.createElement(_Cell2.default, { 'class': cellClass, key: cellId });
 	    });
 	
 	    return _react2.default.createElement(
@@ -22613,40 +22615,7 @@
 	};
 
 /***/ },
-/* 180 */,
-/* 181 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _emptyTemplate = __webpack_require__(185);
-	
-	var _emptyTemplate2 = _interopRequireDefault(_emptyTemplate);
-	
-	var _floorTemplate = __webpack_require__(184);
-	
-	var _floorTemplate2 = _interopRequireDefault(_floorTemplate);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = function () {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? (0, _floorTemplate2.default)((0, _emptyTemplate2.default)()) : arguments[0];
-	  var action = arguments[1];
-	
-	  switch (action.type) {
-	    case 'SCROLL':
-	      return action.state;
-	    default:
-	      return state;
-	  }
-	};
-
-/***/ },
-/* 182 */
+/* 180 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22661,7 +22630,7 @@
 	};
 
 /***/ },
-/* 183 */
+/* 181 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22687,7 +22656,7 @@
 	};
 
 /***/ },
-/* 184 */
+/* 182 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -22706,7 +22675,39 @@
 	};
 
 /***/ },
-/* 185 */
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _emptyTemplate = __webpack_require__(184);
+	
+	var _emptyTemplate2 = _interopRequireDefault(_emptyTemplate);
+	
+	var _floorTemplate = __webpack_require__(182);
+	
+	var _floorTemplate2 = _interopRequireDefault(_floorTemplate);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function () {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? (0, _floorTemplate2.default)((0, _emptyTemplate2.default)()) : arguments[0];
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case 'SCROLL':
+	      return action.state;
+	    default:
+	      return state;
+	  }
+	};
+
+/***/ },
+/* 184 */
 /***/ function(module, exports) {
 
 	'use strict';
