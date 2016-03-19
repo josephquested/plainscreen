@@ -10,7 +10,8 @@ describe('Table', () => {
     const template = emptyTemplate()
     const props = { id: 'table',
      gameState: template,
-     height: 20, width: 30}
+     height: 5, width: 5
+   }
     const wrapper = render(React.createElement(Table, props))
     expect(wrapper.find('#table')).to.have.length(1)
     expect(wrapper.find('tr')).to.have.length(props.height)

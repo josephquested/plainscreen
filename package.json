@@ -20,11 +20,12 @@
     ]
   },
   "dependencies": {
+    "clone": "^1.0.2",
+    "lomega": "^1.0.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-redux": "^4.4.1",
-    "redux": "^3.3.1",
-    "clone": "^1.0.2"
+    "redux": "^3.3.1"
   },
   "devDependencies": {
     "babel-core": "^6.3.26",
@@ -33,9 +34,9 @@
     "babel-preset-react": "^6.3.13",
     "chai": "^3.5.0",
     "enzyme": "^2.0.0",
-    "eslint": "^2.4.0",
     "jsdom": "^8.0.2",
     "mocha": "^2.4.5",
+    "mocha-clean": "^1.0.0",
     "react-addons-test-utils": "^0.14.7",
     "redux-devtools": "^3.1.1",
     "sinon": "^1.17.3",

@@ -1,3 +1,5 @@
+import clone from 'clone'
+
 export const generateStateArray = () => {
   const rawArray = []
   const stateArray = []
@@ -6,6 +8,11 @@ export const generateStateArray = () => {
   while (rawArray.length) { stateArray.push(rawArray.splice(0, 40)) }
 
   return stateArray
+}
+
+export const scrollState = (oldState) => {
+  const state = clone(oldState)
+  return state.map((row) => { row.shift(); return row })
 }
 
 export const returnRandomState = () => {

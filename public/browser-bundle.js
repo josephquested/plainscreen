@@ -60,7 +60,7 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _reducer = __webpack_require__(183);
+	var _reducer = __webpack_require__(184);
 	
 	var _reducer2 = _interopRequireDefault(_reducer);
 	
@@ -20503,6 +20503,10 @@
 	
 	var _floorTemplate2 = _interopRequireDefault(_floorTemplate);
 	
+	var _lomega = __webpack_require__(183);
+	
+	var _lomega2 = _interopRequireDefault(_lomega);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = _react2.default.createClass({
@@ -20515,7 +20519,7 @@
 	  },
 	
 	  handleKeyDown: function handleKeyDown(event) {
-	    console.log((0, _inputTools.convertKeyCode)(event.keyCode));
+	    (0, _lomega2.default)((0, _inputTools.convertKeyCode)(event.keyCode));
 	  },
 	
 	  scrollState: function scrollState() {
@@ -22631,13 +22635,21 @@
 
 /***/ },
 /* 181 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.returnRandomState = exports.scrollState = exports.generateStateArray = undefined;
+	
+	var _clone = __webpack_require__(174);
+	
+	var _clone2 = _interopRequireDefault(_clone);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	var generateStateArray = exports.generateStateArray = function generateStateArray() {
 	  var rawArray = [];
 	  var stateArray = [];
@@ -22651,13 +22663,20 @@
 	  return stateArray;
 	};
 	
+	var scrollState = exports.scrollState = function scrollState(oldState) {
+	  var state = (0, _clone2.default)(oldState);
+	  return state.map(function (row) {
+	    row.shift();return row;
+	  });
+	};
+	
 	var returnRandomState = exports.returnRandomState = function returnRandomState() {
 	  return Math.random() > 0.5 ? 'full' : 'empty';
 	};
 
 /***/ },
 /* 182 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -22665,7 +22684,14 @@
 	  value: true
 	});
 	
-	exports.default = function (state) {
+	var _clone = __webpack_require__(174);
+	
+	var _clone2 = _interopRequireDefault(_clone);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function (oldState) {
+	  var state = (0, _clone2.default)(oldState);
 	  var rows = [state[17], state[18], state[19]];
 	  rows.forEach(function (row) {
 	    row.fill('full');
@@ -22676,6 +22702,19 @@
 
 /***/ },
 /* 183 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = function lomega() {
+	  var args = Array.prototype.slice.call(arguments);
+	  args.forEach(function (arg) {
+	    console.log(arg);
+	  });
+	};
+
+/***/ },
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -22684,7 +22723,7 @@
 	  value: true
 	});
 	
-	var _emptyTemplate = __webpack_require__(184);
+	var _emptyTemplate = __webpack_require__(185);
 	
 	var _emptyTemplate2 = _interopRequireDefault(_emptyTemplate);
 	
@@ -22707,7 +22746,7 @@
 	};
 
 /***/ },
-/* 184 */
+/* 185 */
 /***/ function(module, exports) {
 
 	'use strict';

@@ -5,6 +5,7 @@ import clone from 'clone'
 import { convertKeyCode } from '../utils/input-tools.js'
 import { generateStateArray } from '../utils/state-tools'
 import floorTemplate from '../patterns/floor-template'
+import Ω from 'lomega'
 
 export default React.createClass({
 
@@ -14,7 +15,7 @@ export default React.createClass({
   },
 
   handleKeyDown: function (event) {
-    console.log(convertKeyCode(event.keyCode))
+    Ω(convertKeyCode(event.keyCode))
   },
 
   scrollState: function () {
