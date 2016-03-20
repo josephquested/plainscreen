@@ -1,12 +1,9 @@
 import { expect } from 'chai'
-import emptyTemplate from '../../src/patterns/empty-template'
 import floorTemplate from '../../src/patterns/floor-template'
 
 describe('Floor Template', () => {
   it('should generate an floor state template', () => {
-    const preState = emptyTemplate()
-    const state = floorTemplate(preState)
-
+    const state = floorTemplate()
     expect(state).to.have.length(20)
     expect(state[0]).to.have.length(40)
 

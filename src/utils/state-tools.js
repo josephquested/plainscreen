@@ -10,9 +10,15 @@ export const generateStateArray = () => {
   return stateArray
 }
 
-export const scrollState = (oldState) => {
-  const state = clone(oldState)
+export const scrollState = (state) => {
   return state.map((row) => { row.shift(); return row })
+}
+
+export const fillShortRows = (state, type = 'empty') => {
+  return state.map((row) => {
+    row.length < 40 ? row.push(type) : null
+    return row
+  })
 }
 
 export const returnRandomState = () => {

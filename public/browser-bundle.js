@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
 	
 	var _react = __webpack_require__(1);
 	
@@ -66,6 +66,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	global.Ω = __webpack_require__(187);
+	
 	var store = (0, _redux.createStore)(_reducer2.default);
 	
 	var render = function render() {
@@ -74,6 +76,7 @@
 	
 	store.subscribe(render);
 	render();
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ },
 /* 1 */
@@ -20499,13 +20502,11 @@
 	
 	var _stateTools = __webpack_require__(181);
 	
-	var _floorTemplate = __webpack_require__(182);
+	var _playerTools = __webpack_require__(182);
 	
-	var _floorTemplate2 = _interopRequireDefault(_floorTemplate);
+	var _floorPattern = __webpack_require__(183);
 	
-	var _lomega = __webpack_require__(183);
-	
-	var _lomega2 = _interopRequireDefault(_lomega);
+	var _floorPattern2 = _interopRequireDefault(_floorPattern);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -20513,22 +20514,39 @@
 	  displayName: 'App',
 	
 	
+	  getInitialState: function getInitialState() {
+	    return {
+	      floor: 3,
+	      patternPackage: [],
+	      playerSpawned: false
+	    };
+	  },
+	
 	  componentDidMount: function componentDidMount() {
 	    window.addEventListener('keydown', this.handleKeyDown);
 	    this.scrollState();
 	  },
 	
 	  handleKeyDown: function handleKeyDown(event) {
-	    (0, _lomega2.default)((0, _inputTools.convertKeyCode)(event.keyCode));
+	    Ω((0, _inputTools.convertKeyCode)(event.keyCode));
 	  },
 	
 	  scrollState: function scrollState() {
 	    var _this = this;
 	
-	    var scrollSpeed = 500;
+	    var scrollSpeed = 400;
 	    var scrollInterval = window.setInterval(function () {
-	      var state = (0, _clone2.default)((0, _stateTools.generateStateArray)());
-	      state = (0, _floorTemplate2.default)(state);
+	
+	      var state = (0, _clone2.default)((0, _stateTools.scrollState)(_this.props.gameState));
+	      var floor = Math.random() > 0.5 ? _this.state.floor + 1 : _this.state.floor;
+	      state = (0, _floorPattern2.default)(state, floor);
+	      if (!_this.state.playerSpawned) {
+	        Ω('player should spawn');
+	        state = (0, _playerTools.spawnPlayer)(state, 16, 38);
+	        _this.setState({ playerSpawned: true });
+	      }
+	
+	      state = (0, _stateTools.fillShortRows)(state);
 	      _this.props.store.dispatch({ type: 'SCROLL', state: state });
 	    }, scrollSpeed);
 	  },
@@ -22642,7 +22660,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.returnRandomState = exports.scrollState = exports.generateStateArray = undefined;
+	exports.returnRandomState = exports.fillShortRows = exports.scrollState = exports.generateStateArray = undefined;
 	
 	var _clone = __webpack_require__(174);
 	
@@ -22663,10 +22681,18 @@
 	  return stateArray;
 	};
 	
-	var scrollState = exports.scrollState = function scrollState(oldState) {
-	  var state = (0, _clone2.default)(oldState);
+	var scrollState = exports.scrollState = function scrollState(state) {
 	  return state.map(function (row) {
 	    row.shift();return row;
+	  });
+	};
+	
+	var fillShortRows = exports.fillShortRows = function fillShortRows(state) {
+	  var type = arguments.length <= 1 || arguments[1] === undefined ? 'empty' : arguments[1];
+	
+	  return state.map(function (row) {
+	    row.length < 40 ? row.push(type) : null;
+	    return row;
 	  });
 	};
 	
@@ -22683,6 +22709,52 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.findPlayer = exports.applyPhysics = exports.spawnPlayer = undefined;
+	
+	var _clone = __webpack_require__(174);
+	
+	var _clone2 = _interopRequireDefault(_clone);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var spawnPlayer = exports.spawnPlayer = function spawnPlayer(oldState, row, cell) {
+	  var state = (0, _clone2.default)(oldState);
+	  state[row][cell] = 'player';
+	  state[row - 1][cell] = 'player';
+	  return state;
+	};
+	
+	var applyPhysics = exports.applyPhysics = function applyPhysics(oldState) {
+	  var state = (0, _clone2.default)(oldState);
+	
+	  return state;
+	};
+	
+	var findPlayer = exports.findPlayer = function findPlayer(state) {
+	  var cells = [];
+	  for (var i = 0; i < state.length; i++) {
+	    for (var j = 0; j < state[i].length; j++) {
+	      if (state[i][j] === 'player') {
+	        cells.push([i, j]);
+	        if (state[i + 1][j] === 'player') {
+	          cells.push([i + 1, j]);
+	        }
+	        return cells;
+	      }
+	    }
+	  }
+	  return null;
+	};
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
 	var _clone = __webpack_require__(174);
 	
@@ -22691,26 +22763,15 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = function (oldState) {
+	  var height = arguments.length <= 1 || arguments[1] === undefined ? 3 : arguments[1];
+	
 	  var state = (0, _clone2.default)(oldState);
-	  var rows = [state[17], state[18], state[19]];
-	  rows.forEach(function (row) {
-	    row.fill('full');
-	  });
+	  var startingRow = 20 - height;
+	  for (var i = startingRow; i < 20; i++) {
+	    state[i].push('full');
+	  }
 	
 	  return state;
-	};
-
-/***/ },
-/* 183 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	module.exports = function lomega() {
-	  var args = Array.prototype.slice.call(arguments);
-	  args.forEach(function (arg) {
-	    console.log(arg);
-	  });
 	};
 
 /***/ },
@@ -22727,14 +22788,14 @@
 	
 	var _emptyTemplate2 = _interopRequireDefault(_emptyTemplate);
 	
-	var _floorTemplate = __webpack_require__(182);
+	var _floorTemplate = __webpack_require__(186);
 	
 	var _floorTemplate2 = _interopRequireDefault(_floorTemplate);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.default = function () {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? (0, _floorTemplate2.default)((0, _emptyTemplate2.default)()) : arguments[0];
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? (0, _floorTemplate2.default)() : arguments[0];
 	  var action = arguments[1];
 	
 	  switch (action.type) {
@@ -22763,6 +22824,49 @@
 	  }
 	
 	  return state;
+	};
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _clone = __webpack_require__(174);
+	
+	var _clone2 = _interopRequireDefault(_clone);
+	
+	var _emptyTemplate = __webpack_require__(185);
+	
+	var _emptyTemplate2 = _interopRequireDefault(_emptyTemplate);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function () {
+	  var state = (0, _emptyTemplate2.default)();
+	  var rows = [state[17], state[18], state[19]];
+	  rows.forEach(function (row) {
+	    row.fill('full');
+	  });
+	
+	  return state;
+	};
+
+/***/ },
+/* 187 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = function lomega() {
+	  var args = Array.prototype.slice.call(arguments);
+	  args.forEach(function (arg) {
+	    console.log(arg);
+	  });
 	};
 
 /***/ }

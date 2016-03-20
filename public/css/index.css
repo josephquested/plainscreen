@@ -9,6 +9,7 @@ table {
   margin-right: center;
   margin: 0 auto;
   background-color: white;
+  border-collapse: collapse;
 }
 
 td {
@@ -18,14 +19,16 @@ td {
 
 td.empty {
   background-color: white;
+  border: 1px solid white;
 }
 
 td.full {
   background-color: black;
+  border: 1px solid white;
 }
 
 td.player {
-  background-color: red;
+  background-color: #008080;
 }
 
 .main-header {

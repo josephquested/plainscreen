@@ -1,3 +1,5 @@
+global.Ω = require('lomega')
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore } from 'redux'

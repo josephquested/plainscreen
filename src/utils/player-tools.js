@@ -1,14 +1,30 @@
-export const spawnPlayer = (state) => {
-  const states = [
-    state[16][30],
-    state[15][30],
-    state[16][31],
-    state[15][31],
-  ]
+import clone from 'clone'
 
-  states.forEach((state) => {
-    state = 'player'
-  })
+export const spawnPlayer = (oldState, row, cell) => {
+  const state = clone(oldState)
+  state[row][cell] = 'player'
+  state[row - 1][cell] = 'player'
+  return state
+}
+
+export const applyPhysics = (oldState) => {
+  const state = clone(oldState)
 
   return state
+}
+
+export const findPlayer = (state) => {
+  const cells = []
+  for (let i = 0; i < state.length; i++) {
+    for (let j = 0; j < state[i].length; j++) {
+      if (state[i][j] === 'player') {
+        cells.push([i, j])
+        if (state[i + 1][j] === 'player') {
+          cells.push([i + 1, j])
+        }
+      return cells
+      }
+    }
+  }
+  return null
 }

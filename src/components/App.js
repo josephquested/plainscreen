@@ -3,11 +3,19 @@ import Header from './Header.js'
 import Table from './board/Table.js'
 import clone from 'clone'
 import { convertKeyCode } from '../utils/input-tools.js'
-import { generateStateArray } from '../utils/state-tools'
-import floorTemplate from '../patterns/floor-template'
-import Ω from 'lomega'
+import { returnRandomState, scrollState, fillShortRows } from '../utils/state-tools'
+import { spawnPlayer } from '../utils/player-tools'
+import floorPattern from '../patterns/floor-pattern'
 
 export default React.createClass({
+
+  getInitialState: function () {
+    return {
+      floor: 3,
+      patternPackage: [],
+      playerSpawned: false
+    }
+  },
 
   componentDidMount: function () {
     window.addEventListener('keydown', this.handleKeyDown)
@@ -19,10 +27,19 @@ export default React.createClass({
   },
 
   scrollState: function () {
-    const scrollSpeed = 500
+    const scrollSpeed = 400
     const scrollInterval = window.setInterval(() => {
-      let state = clone(generateStateArray())
-      state = floorTemplate(state)
+
+      let state = clone(scrollState(this.props.gameState))
+      let floor = Math.random() > 0.5 ? this.state.floor + 1 : this.state.floor
+      state = floorPattern(state, floor)
+      if (!this.state.playerSpawned) {
+        Ω('player should spawn')
+        state = spawnPlayer(state, 16, 38)
+        this.setState({playerSpawned: true})
+      }
+
+      state = fillShortRows(state)
       this.props.store.dispatch({type: 'SCROLL', state: state})
     }, scrollSpeed)
   },
