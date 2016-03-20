@@ -20540,12 +20540,14 @@
 	      var state = (0, _clone2.default)((0, _stateTools.scrollState)(_this.props.gameState));
 	      var floor = Math.random() > 0.5 ? _this.state.floor + 1 : _this.state.floor;
 	      state = (0, _floorPattern2.default)(state, floor);
+	
 	      if (!_this.state.playerSpawned) {
 	        Ω('player should spawn');
-	        state = (0, _playerTools.spawnPlayer)(state, 16, 38);
+	        state = (0, _playerTools.spawnPlayer)(state, 1, 39);
 	        _this.setState({ playerSpawned: true });
 	      }
 	
+	      state = (0, _playerTools.applyPhysics)(state);
 	      state = (0, _stateTools.fillShortRows)(state);
 	      _this.props.store.dispatch({ type: 'SCROLL', state: state });
 	    }, scrollSpeed);
@@ -22726,7 +22728,21 @@
 	
 	var applyPhysics = exports.applyPhysics = function applyPhysics(oldState) {
 	  var state = (0, _clone2.default)(oldState);
+	  var playerCells = findPlayer(state);
+	  var playerRow = playerCells[1][0];
+	  var playerColumn = playerCells[1][1];
 	
+	  if (state[playerRow + 1][playerColumn] === 'full') {
+	    return state;
+	  }
+	  if (!playerCells[0]) {
+	    state[playerRow][playerColumn] = 'empty';
+	  } else {
+	    state[playerRow - 1][playerColumn] = 'empty';
+	    state[playerRow + 1][playerColumn] = 'player';
+	  }
+	
+	  state[playerRow + 1][playerColumn] = 'player';
 	  return state;
 	};
 	
@@ -22739,6 +22755,7 @@
 	        if (state[i + 1][j] === 'player') {
 	          cells.push([i + 1, j]);
 	        }
+	        cells.length === 1 ? cells.unshift(null) : null;
 	        return cells;
 	      }
 	    }

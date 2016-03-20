@@ -5,7 +5,12 @@ import { spawnPlayer, findPlayer } from '../../src/utils/player-tools'
 describe('Find Player', () => {
   it('should find the x,y coordinates of the player cells', () => {
     let state = spawnPlayer(floorTemplate(), 1, 0)
+    state[0][0] = 'empty'
     let playerCells = findPlayer(state)
+    expect(playerCells).to.eql([null, [1, 0]])
+
+    state = spawnPlayer(floorTemplate(), 1, 0)
+    playerCells = findPlayer(state)
     expect(playerCells).to.eql([[0, 0], [1, 0]])
 
     state = spawnPlayer(floorTemplate(), 10, 10)
