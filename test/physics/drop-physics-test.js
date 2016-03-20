@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 import floorTemplate from '../../src/patterns/floor-template'
-import { spawnPlayer, applyPhysics } from '../../src/utils/player-tools'
+import { spawnPlayer, findPlayer } from '../../src/utils/player-tools'
+import dropPhysics from '../../src/physics/drop-physics'
 
 describe('Player Drop Physics', () => {
   it('should apply drop physics to the player', () => {
@@ -12,7 +13,8 @@ describe('Player Drop Physics', () => {
       expect(state[i + 1][0]).to.have.string('player')
       expect(state[i + 2][0]).to.have.string('empty')
 
-      state = applyPhysics(state)
+      let playerCells = findPlayer(state)
+      state = dropPhysics(state, playerCells)
 
       expect(state[i][0]).to.have.string('empty')
       expect(state[i + 1][0]).to.have.string('player')
@@ -33,7 +35,9 @@ describe('Player Couching/Drop Physics', () => {
       expect(state[i + 1][0]).to.have.string('player')
       expect(state[i + 2][0]).to.have.string('empty')
 
-      state = applyPhysics(state)
+      let playerCells = findPlayer(state)
+      state = dropPhysics(state, playerCells)
+      state = dropPhysics(state)
 
       expect(state[i][0]).to.have.string('empty')
       expect(state[i + 1][0]).to.have.string('empty')
@@ -51,7 +55,9 @@ describe ('Player Resting Physics', () => {
     expect(state[16][0]).to.have.string('player')
     expect(state[17][0]).to.have.string('full')
 
-    state = applyPhysics(state)
+    let playerCells = findPlayer(state)
+    state = dropPhysics(state, playerCells)
+    state = dropPhysics(state)
 
     expect(state[15][0]).to.have.string('player')
     expect(state[16][0]).to.have.string('player')
@@ -68,7 +74,9 @@ describe ('Player Crouching/Resting Physics', () => {
     expect(state[16][0]).to.have.string('player')
     expect(state[17][0]).to.have.string('full')
 
-    state = applyPhysics(state)
+    let playerCells = findPlayer(state)
+    state = dropPhysics(state, playerCells)
+    state = dropPhysics(state)
 
     expect(state[15][0]).to.have.string('empty')
     expect(state[16][0]).to.have.string('player')

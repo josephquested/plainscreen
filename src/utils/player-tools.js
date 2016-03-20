@@ -10,12 +10,14 @@ export const spawnPlayer = (oldState, row, cell) => {
 export const applyPhysics = (oldState) => {
   const state = clone(oldState)
   const playerCells = findPlayer(state)
+  if (!playerCells) return state
   let playerRow = playerCells[1][0]
   let playerColumn = playerCells[1][1]
 
-  if (state[playerRow + 1][playerColumn] === 'full') { return state }
+  if (state[playerRow + 1][playerColumn] === 'full') return state
   if (!playerCells[0]) {
     state[playerRow][playerColumn] = 'empty'
+
   } else {
     state[playerRow - 1][playerColumn] = 'empty'
     state[playerRow + 1][playerColumn] = 'player'

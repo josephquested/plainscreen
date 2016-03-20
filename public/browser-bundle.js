@@ -20504,6 +20504,10 @@
 	
 	var _playerTools = __webpack_require__(182);
 	
+	var _applyPhysics2 = __webpack_require__(189);
+	
+	var _applyPhysics3 = _interopRequireDefault(_applyPhysics2);
+	
 	var _floorPattern = __webpack_require__(183);
 	
 	var _floorPattern2 = _interopRequireDefault(_floorPattern);
@@ -20525,6 +20529,7 @@
 	  componentDidMount: function componentDidMount() {
 	    window.addEventListener('keydown', this.handleKeyDown);
 	    this.scrollState();
+	    this.applyPhysics();
 	  },
 	
 	  handleKeyDown: function handleKeyDown(event) {
@@ -20543,14 +20548,25 @@
 	
 	      if (!_this.state.playerSpawned) {
 	        Ω('player should spawn');
-	        state = (0, _playerTools.spawnPlayer)(state, 1, 39);
+	        state = (0, _playerTools.spawnPlayer)(state, 1, 38);
 	        _this.setState({ playerSpawned: true });
 	      }
 	
-	      state = (0, _playerTools.applyPhysics)(state);
 	      state = (0, _stateTools.fillShortRows)(state);
 	      _this.props.store.dispatch({ type: 'SCROLL', state: state });
 	    }, scrollSpeed);
+	  },
+	
+	  applyPhysics: function applyPhysics() {
+	    var _this2 = this;
+	
+	    var physicsSpeed = 250;
+	    var physicsInterval = window.setInterval(function () {
+	      var state = (0, _clone2.default)(_this2.props.gameState);
+	
+	      state = (0, _applyPhysics3.default)(state);
+	      _this2.props.store.dispatch({ type: 'SCROLL', state: state });
+	    }, physicsSpeed);
 	  },
 	
 	  render: function render() {
@@ -22729,12 +22745,11 @@
 	var applyPhysics = exports.applyPhysics = function applyPhysics(oldState) {
 	  var state = (0, _clone2.default)(oldState);
 	  var playerCells = findPlayer(state);
+	  if (!playerCells) return state;
 	  var playerRow = playerCells[1][0];
 	  var playerColumn = playerCells[1][1];
 	
-	  if (state[playerRow + 1][playerColumn] === 'full') {
-	    return state;
-	  }
+	  if (state[playerRow + 1][playerColumn] === 'full') return state;
 	  if (!playerCells[0]) {
 	    state[playerRow][playerColumn] = 'empty';
 	  } else {
@@ -22884,6 +22899,83 @@
 	  args.forEach(function (arg) {
 	    console.log(arg);
 	  });
+	};
+
+/***/ },
+/* 188 */,
+/* 189 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _clone = __webpack_require__(174);
+	
+	var _clone2 = _interopRequireDefault(_clone);
+	
+	var _playerTools = __webpack_require__(182);
+	
+	var _dropPhysics = __webpack_require__(190);
+	
+	var _dropPhysics2 = _interopRequireDefault(_dropPhysics);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function (oldState) {
+	  var state = (0, _clone2.default)(oldState);
+	  var playerCells = (0, _playerTools.findPlayer)(state);
+	  if (!playerCells) return state;
+	  state = (0, _dropPhysics2.default)(state, playerCells);
+	  return state;
+	};
+
+/***/ },
+/* 190 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _clone = __webpack_require__(174);
+	
+	var _clone2 = _interopRequireDefault(_clone);
+	
+	var _dropPhysics = __webpack_require__(190);
+	
+	var _dropPhysics2 = _interopRequireDefault(_dropPhysics);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function (oldState, playerCells) {
+	  if (!playerCells) return oldState;
+	
+	  var state = (0, _clone2.default)(oldState);
+	  var playerRow = playerCells[1][0];
+	  var playerColumn = playerCells[1][1];
+	
+	  // if the player is standing on the ground, don't apply physics
+	  if (state[playerRow + 1][playerColumn] === 'full') return state;
+	
+	  // apply drop physics
+	  state[playerRow + 1][playerColumn] = 'player';
+	
+	  // handles a crouching player event
+	  if (!playerCells[0]) {
+	    state[playerRow][playerColumn] = 'empty';
+	
+	    // handles a standing player event
+	  } else {
+	      state[playerRow - 1][playerColumn] = 'empty';
+	      state[playerRow + 1][playerColumn] = 'player';
+	    }
+	
+	  return state;
 	};
 
 /***/ }
