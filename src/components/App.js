@@ -5,6 +5,7 @@ import clone from 'clone'
 import { convertKeyCode } from '../utils/input-tools.js'
 import { returnRandomState, scrollState, fillShortRows } from '../utils/state-tools'
 import { spawnPlayer } from '../utils/player-tools'
+import airborneScrollAdjust from '../physics/airborne-scroll-adjust'
 import applyPhysics from '../physics/apply-physics'
 import floorPattern from '../patterns/floor-pattern'
 
@@ -25,7 +26,7 @@ export default React.createClass({
   },
 
   handleKeyDown: function (event) {
-    Ω(convertKeyCode(event.keyCode))
+    console.log(convertKeyCode(event.keyCode))
   },
 
   scrollState: function () {
@@ -38,11 +39,12 @@ export default React.createClass({
 
       if (!this.state.playerSpawned) {
         Ω('player should spawn')
-        state = spawnPlayer(state, 1, 38)
+        state = spawnPlayer(state, 1, 18)
         this.setState({playerSpawned: true})
       }
 
       state = fillShortRows(state)
+      state = airborneScrollAdjust(state)
       this.props.store.dispatch({type: 'SCROLL', state: state})
     }, scrollSpeed)
   },

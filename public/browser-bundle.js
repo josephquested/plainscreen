@@ -20504,6 +20504,10 @@
 	
 	var _playerTools = __webpack_require__(182);
 	
+	var _airborneScrollAdjust = __webpack_require__(191);
+	
+	var _airborneScrollAdjust2 = _interopRequireDefault(_airborneScrollAdjust);
+	
 	var _applyPhysics2 = __webpack_require__(189);
 	
 	var _applyPhysics3 = _interopRequireDefault(_applyPhysics2);
@@ -20533,7 +20537,7 @@
 	  },
 	
 	  handleKeyDown: function handleKeyDown(event) {
-	    Ω((0, _inputTools.convertKeyCode)(event.keyCode));
+	    console.log((0, _inputTools.convertKeyCode)(event.keyCode));
 	  },
 	
 	  scrollState: function scrollState() {
@@ -20548,11 +20552,12 @@
 	
 	      if (!_this.state.playerSpawned) {
 	        Ω('player should spawn');
-	        state = (0, _playerTools.spawnPlayer)(state, 1, 38);
+	        state = (0, _playerTools.spawnPlayer)(state, 1, 18);
 	        _this.setState({ playerSpawned: true });
 	      }
 	
 	      state = (0, _stateTools.fillShortRows)(state);
+	      state = (0, _airborneScrollAdjust2.default)(state);
 	      _this.props.store.dispatch({ type: 'SCROLL', state: state });
 	    }, scrollSpeed);
 	  },
@@ -22975,6 +22980,56 @@
 	      state[playerRow + 1][playerColumn] = 'player';
 	    }
 	
+	  return state;
+	};
+
+/***/ },
+/* 191 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _clone = __webpack_require__(174);
+	
+	var _clone2 = _interopRequireDefault(_clone);
+	
+	var _dropPhysics = __webpack_require__(190);
+	
+	var _dropPhysics2 = _interopRequireDefault(_dropPhysics);
+	
+	var _playerTools = __webpack_require__(182);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function (oldState) {
+	  var state = (0, _clone2.default)(oldState);
+	  var playerCells = (0, _playerTools.findPlayer)(state);
+	  if (!playerCells) return oldState;
+	  var playerRow = playerCells[1][0];
+	  var playerColumn = playerCells[1][1];
+	
+	  // if the player is isn't airborne, don't adjust scroll
+	  if (state[playerRow + 1][playerColumn] === 'full') return oldState;
+	
+	  // handles a crouching player event
+	  if (!playerCells[0]) {
+	    state[playerRow][playerColumn + 1] = 'player';
+	    state[playerRow][playerColumn] = 'empty';
+	
+	    // handles a standing player event
+	  } else {
+	      state[playerRow - 1][playerColumn + 1] = 'player';
+	      state[playerRow - 1][playerColumn] = 'empty';
+	      state[playerRow][playerColumn + 1] = 'player';
+	      state[playerRow][playerColumn] = 'empty';
+	    }
+	
+	  // if the player
+	  state[playerRow][playerColumn];
 	  return state;
 	};
 
