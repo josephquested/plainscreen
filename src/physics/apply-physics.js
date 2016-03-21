@@ -6,6 +6,6 @@ export default (oldState) => {
   let state = clone(oldState)
   let playerCells = findPlayer(state)
   if (!playerCells) return state
-  state = dropPhysics(state, playerCells)
+  state = dropPhysics(state)
   return state
 }

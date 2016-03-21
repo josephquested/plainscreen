@@ -36,7 +36,6 @@ describe('Player Couching/Drop Physics', () => {
       expect(state[i + 2][0]).to.have.string('empty')
 
       let playerCells = findPlayer(state)
-      state = dropPhysics(state, playerCells)
       state = dropPhysics(state)
 
       expect(state[i][0]).to.have.string('empty')

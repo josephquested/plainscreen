@@ -6,6 +6,8 @@ export default (oldState) => {
   let state = clone(oldState)
   const playerCells = findPlayer(state)
   if (!playerCells) return oldState
+
+  // assigns the starting row and cell values for the player location
   let playerRow = playerCells[1][0]
   let playerColumn = playerCells[1][1]
 

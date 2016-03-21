@@ -20,7 +20,10 @@ export default React.createClass({
   },
 
   controlInputs: function (event) {
-    console.log(convertKeyCode(event.keyCode))
+    const inputKey = convertKeyCode(event.keyCode)
+    if (inputKey === 'left' || inputKey === 'right') {
+      this.props.store.dispatch({type: 'MOVE', state: this.props.gameState, direction: inputKey})
+    }
   },
 
   controlScroll: function () {
