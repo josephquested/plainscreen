@@ -43,7 +43,7 @@ export default React.createClass({
       }
 
       state = fillShortRows(state)
-      this.props.store.dispatch({type: 'SCROLL', state: state})
+      this.props.store.dispatch({type: 'SCROLL', state: state, floor: this.state.floor})
     }, scrollSpeed)
   },
 

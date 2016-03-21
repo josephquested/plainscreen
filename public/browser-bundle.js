@@ -60,7 +60,7 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _reducer = __webpack_require__(184);
+	var _reducer = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./reducer\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	
 	var _reducer2 = _interopRequireDefault(_reducer);
 	
@@ -20553,7 +20553,7 @@
 	      }
 	
 	      state = (0, _stateTools.fillShortRows)(state);
-	      _this.props.store.dispatch({ type: 'SCROLL', state: state });
+	      _this.props.store.dispatch({ type: 'SCROLL', state: state, floor: _this.state.floor });
 	    }, scrollSpeed);
 	  },
 	
@@ -22807,88 +22807,9 @@
 	};
 
 /***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _emptyTemplate = __webpack_require__(185);
-	
-	var _emptyTemplate2 = _interopRequireDefault(_emptyTemplate);
-	
-	var _floorTemplate = __webpack_require__(186);
-	
-	var _floorTemplate2 = _interopRequireDefault(_floorTemplate);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = function () {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? (0, _floorTemplate2.default)() : arguments[0];
-	  var action = arguments[1];
-	
-	  switch (action.type) {
-	    case 'SCROLL':
-	      return action.state;
-	    default:
-	      return state;
-	  }
-	};
-
-/***/ },
-/* 185 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	exports.default = function () {
-	  var state = [];
-	  for (var i = 0; i < 20; i++) {
-	    var cells = new Array(40).fill('empty');
-	    state.push(cells);
-	  }
-	
-	  return state;
-	};
-
-/***/ },
-/* 186 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _clone = __webpack_require__(174);
-	
-	var _clone2 = _interopRequireDefault(_clone);
-	
-	var _emptyTemplate = __webpack_require__(185);
-	
-	var _emptyTemplate2 = _interopRequireDefault(_emptyTemplate);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = function () {
-	  var state = (0, _emptyTemplate2.default)();
-	  var rows = [state[17], state[18], state[19]];
-	  rows.forEach(function (row) {
-	    row.fill('full');
-	  });
-	
-	  return state;
-	};
-
-/***/ },
+/* 184 */,
+/* 185 */,
+/* 186 */,
 /* 187 */
 /***/ function(module, exports) {
 
