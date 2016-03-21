@@ -60,13 +60,13 @@
 	
 	var _App2 = _interopRequireDefault(_App);
 	
-	var _reducer = __webpack_require__(184);
+	var _reducer = __webpack_require__(187);
 	
 	var _reducer2 = _interopRequireDefault(_reducer);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	global.Ω = __webpack_require__(187);
+	global.Ω = __webpack_require__(188);
 	
 	var store = (0, _redux.createStore)(_reducer2.default);
 	
@@ -20504,15 +20504,15 @@
 	
 	var _playerTools = __webpack_require__(182);
 	
-	var _airborneScrollAdjust = __webpack_require__(191);
+	var _airborneScrollAdjust = __webpack_require__(183);
 	
 	var _airborneScrollAdjust2 = _interopRequireDefault(_airborneScrollAdjust);
 	
-	var _applyPhysics2 = __webpack_require__(189);
+	var _applyPhysics2 = __webpack_require__(185);
 	
 	var _applyPhysics3 = _interopRequireDefault(_applyPhysics2);
 	
-	var _floorPattern = __webpack_require__(183);
+	var _floorPattern = __webpack_require__(186);
 	
 	var _floorPattern2 = _interopRequireDefault(_floorPattern);
 	
@@ -22797,207 +22797,7 @@
 	
 	var _clone2 = _interopRequireDefault(_clone);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = function (oldState) {
-	  var height = arguments.length <= 1 || arguments[1] === undefined ? 3 : arguments[1];
-	
-	  var state = (0, _clone2.default)(oldState);
-	  var startingRow = 20 - height;
-	  for (var i = startingRow; i < 20; i++) {
-	    state[i].push('full');
-	  }
-	
-	  return state;
-	};
-
-/***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _emptyTemplate = __webpack_require__(185);
-	
-	var _emptyTemplate2 = _interopRequireDefault(_emptyTemplate);
-	
-	var _floorTemplate = __webpack_require__(186);
-	
-	var _floorTemplate2 = _interopRequireDefault(_floorTemplate);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = function () {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? (0, _floorTemplate2.default)() : arguments[0];
-	  var action = arguments[1];
-	
-	  switch (action.type) {
-	    case 'SCROLL':
-	      return action.state;
-	    default:
-	      return state;
-	  }
-	};
-
-/***/ },
-/* 185 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	exports.default = function () {
-	  var state = [];
-	  for (var i = 0; i < 20; i++) {
-	    var cells = new Array(40).fill('empty');
-	    state.push(cells);
-	  }
-	
-	  return state;
-	};
-
-/***/ },
-/* 186 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _clone = __webpack_require__(174);
-	
-	var _clone2 = _interopRequireDefault(_clone);
-	
-	var _emptyTemplate = __webpack_require__(185);
-	
-	var _emptyTemplate2 = _interopRequireDefault(_emptyTemplate);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = function () {
-	  var state = (0, _emptyTemplate2.default)();
-	  var rows = [state[17], state[18], state[19]];
-	  rows.forEach(function (row) {
-	    row.fill('full');
-	  });
-	
-	  return state;
-	};
-
-/***/ },
-/* 187 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	module.exports = function lomega() {
-	  var args = Array.prototype.slice.call(arguments);
-	  args.forEach(function (arg) {
-	    console.log(arg);
-	  });
-	};
-
-/***/ },
-/* 188 */,
-/* 189 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _clone = __webpack_require__(174);
-	
-	var _clone2 = _interopRequireDefault(_clone);
-	
-	var _playerTools = __webpack_require__(182);
-	
-	var _dropPhysics = __webpack_require__(190);
-	
-	var _dropPhysics2 = _interopRequireDefault(_dropPhysics);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = function (oldState) {
-	  var state = (0, _clone2.default)(oldState);
-	  var playerCells = (0, _playerTools.findPlayer)(state);
-	  if (!playerCells) return state;
-	  state = (0, _dropPhysics2.default)(state, playerCells);
-	  return state;
-	};
-
-/***/ },
-/* 190 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _clone = __webpack_require__(174);
-	
-	var _clone2 = _interopRequireDefault(_clone);
-	
-	var _dropPhysics = __webpack_require__(190);
-	
-	var _dropPhysics2 = _interopRequireDefault(_dropPhysics);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = function (oldState, playerCells) {
-	  if (!playerCells) return oldState;
-	
-	  var state = (0, _clone2.default)(oldState);
-	  var playerRow = playerCells[1][0];
-	  var playerColumn = playerCells[1][1];
-	
-	  // if the player is standing on the ground, don't apply physics
-	  if (state[playerRow + 1][playerColumn] === 'full') return state;
-	
-	  // apply drop physics
-	  state[playerRow + 1][playerColumn] = 'player';
-	
-	  // handles a crouching player event
-	  if (!playerCells[0]) {
-	    state[playerRow][playerColumn] = 'empty';
-	
-	    // handles a standing player event
-	  } else {
-	      state[playerRow - 1][playerColumn] = 'empty';
-	      state[playerRow + 1][playerColumn] = 'player';
-	    }
-	
-	  return state;
-	};
-
-/***/ },
-/* 191 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _clone = __webpack_require__(174);
-	
-	var _clone2 = _interopRequireDefault(_clone);
-	
-	var _dropPhysics = __webpack_require__(190);
+	var _dropPhysics = __webpack_require__(184);
 	
 	var _dropPhysics2 = _interopRequireDefault(_dropPhysics);
 	
@@ -23030,6 +22830,205 @@
 	
 	  // if the player
 	  state[playerRow][playerColumn];
+	  return state;
+	};
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _clone = __webpack_require__(174);
+	
+	var _clone2 = _interopRequireDefault(_clone);
+	
+	var _dropPhysics = __webpack_require__(184);
+	
+	var _dropPhysics2 = _interopRequireDefault(_dropPhysics);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function (oldState, playerCells) {
+	  if (!playerCells) return oldState;
+	
+	  var state = (0, _clone2.default)(oldState);
+	  var playerRow = playerCells[1][0];
+	  var playerColumn = playerCells[1][1];
+	
+	  // if the player is standing on the ground, don't apply physics
+	  if (state[playerRow + 1][playerColumn] === 'full') return state;
+	
+	  // apply drop physics
+	  state[playerRow + 1][playerColumn] = 'player';
+	
+	  // handles a crouching player event
+	  if (!playerCells[0]) {
+	    state[playerRow][playerColumn] = 'empty';
+	
+	    // handles a standing player event
+	  } else {
+	      state[playerRow - 1][playerColumn] = 'empty';
+	      state[playerRow + 1][playerColumn] = 'player';
+	    }
+	
+	  return state;
+	};
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _clone = __webpack_require__(174);
+	
+	var _clone2 = _interopRequireDefault(_clone);
+	
+	var _playerTools = __webpack_require__(182);
+	
+	var _dropPhysics = __webpack_require__(184);
+	
+	var _dropPhysics2 = _interopRequireDefault(_dropPhysics);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function (oldState) {
+	  var state = (0, _clone2.default)(oldState);
+	  var playerCells = (0, _playerTools.findPlayer)(state);
+	  if (!playerCells) return state;
+	  state = (0, _dropPhysics2.default)(state, playerCells);
+	  return state;
+	};
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _clone = __webpack_require__(174);
+	
+	var _clone2 = _interopRequireDefault(_clone);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function (oldState) {
+	  var height = arguments.length <= 1 || arguments[1] === undefined ? 3 : arguments[1];
+	
+	  var state = (0, _clone2.default)(oldState);
+	  var startingRow = 20 - height;
+	  for (var i = startingRow; i < 20; i++) {
+	    state[i].push('full');
+	  }
+	
+	  return state;
+	};
+
+/***/ },
+/* 187 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _emptyTemplate = __webpack_require__(189);
+	
+	var _emptyTemplate2 = _interopRequireDefault(_emptyTemplate);
+	
+	var _floorTemplate = __webpack_require__(190);
+	
+	var _floorTemplate2 = _interopRequireDefault(_floorTemplate);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function () {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? (0, _floorTemplate2.default)() : arguments[0];
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case 'SCROLL':
+	      return action.state;
+	    default:
+	      return state;
+	  }
+	};
+
+/***/ },
+/* 188 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	module.exports = function lomega() {
+	  var args = Array.prototype.slice.call(arguments);
+	  args.forEach(function (arg) {
+	    console.log(arg);
+	  });
+	};
+
+/***/ },
+/* 189 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	exports.default = function () {
+	  var state = [];
+	  for (var i = 0; i < 20; i++) {
+	    var cells = new Array(40).fill('empty');
+	    state.push(cells);
+	  }
+	
+	  return state;
+	};
+
+/***/ },
+/* 190 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _clone = __webpack_require__(174);
+	
+	var _clone2 = _interopRequireDefault(_clone);
+	
+	var _emptyTemplate = __webpack_require__(189);
+	
+	var _emptyTemplate2 = _interopRequireDefault(_emptyTemplate);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function () {
+	  var state = (0, _emptyTemplate2.default)();
+	  var rows = [state[17], state[18], state[19]];
+	  rows.forEach(function (row) {
+	    row.fill('full');
+	  });
+	
 	  return state;
 	};
 
