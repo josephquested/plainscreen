@@ -1,7 +1,6 @@
 import { expect } from 'chai'
 import floorTemplate from '../../src/patterns/floor-template'
 import { spawnPlayer } from '../../src/utils/player-tools'
-import airborneScrollAdjust from '../../src/physics/airborne-scroll-adjust'
 import horizontalMovement from '../../src/physics/horizontal-movement'
 import { scrollState, fillShortRows } from '../../src/utils/state-tools'
 

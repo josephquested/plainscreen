@@ -10,12 +10,14 @@ export default (oldState) => {
   // assigns the starting row and cell values for the player location
   let playerRow = playerCells[1][0]
   let playerColumn = playerCells[1][1]
+  let crouching = !playerCells[0] ? true : false
 
-  // if the player is isn't airborne, don't adjust scroll
-  if (state[playerRow + 1][playerColumn] === 'full') return oldState
+  // if the player is blocked, scroll
+  if (state[playerRow][playerColumn + 1] === 'full') return oldState
+  if (!crouching && state[playerRow - 1][playerColumn + 1] === 'full') return oldState
 
   // handles a crouching player event
-  if (!playerCells[0]) {
+  if (crouching) {
     state[playerRow][playerColumn + 1] = 'player'
     state[playerRow][playerColumn] = 'empty'
 
@@ -27,7 +29,5 @@ export default (oldState) => {
     state[playerRow][playerColumn] = 'empty'
   }
 
-  // if the player
-  state[playerRow][playerColumn]
   return state
 }
