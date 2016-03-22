@@ -8,6 +8,8 @@ export const convertKeyCode = (keyCode) => {
    [65, 'left'],
    [39, 'right'],
    [68, 'right'],
+   [90, 'jump'],
+   [191, 'jump']
   ])
 
   return keys.get(keyCode)

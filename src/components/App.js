@@ -9,17 +9,36 @@ export default React.createClass({
   getInitialState: function () {
     return {
       floor: 3,
-      patternPackage: []
+      patternPackage: [],
+      jumping: false,
+      keys: []
     }
   },
 
   componentDidMount: function () {
-    window.addEventListener('keydown', this.controlInputs)
+    window.addEventListener('keydown', (event) => {
+      this.SetState({keys: keys[event.keyCode] = true})
+    })
+    window.addEventListener('keydown', this.controlJump)
     this.controlScroll()
     this.controlPhysics()
   },
 
-  controlInputs: function (event) {
+
+  controlJump: function (event) {
+    const inputKey = convertKeyCode(event.keyCode)
+    Ω(event)
+    // if (inputKey === 'jump') {
+      // this.props.store.dispatch({type: 'MOVE', state: this.props.gameState, direction: inputKey})
+    // }
+    if (inputKey === 'jump') {
+      this.setState({jumping: true})
+    } else {
+      this.setState({jumping: false})
+    }
+  },
+
+  controlMovement: function (event) {
     const inputKey = convertKeyCode(event.keyCode)
     if (inputKey === 'left' || inputKey === 'right') {
       this.props.store.dispatch({type: 'MOVE', state: this.props.gameState, direction: inputKey})
